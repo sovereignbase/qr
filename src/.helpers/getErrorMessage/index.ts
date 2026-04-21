@@ -1,6 +1,5 @@
 /*
- * Copyright 2026 z-base
- *
+ * Copyright 2026 Sovereignbase
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -14,6 +13,9 @@
  * limitations under the License.
  */
 
+/**
+ * Normalizes an unknown thrown value into a non-empty error message.
+ */
 export function getErrorMessage(error: unknown, fallback: string): string {
   if (error instanceof Error && error.message.trim().length > 0)
     return error.message

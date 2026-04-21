@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 z-base
+ * Copyright 2026 Sovereignbase
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,12 +21,11 @@ import { attachDialogBackdropFade } from '../../.helpers/attachDialogBackdropFad
 import { getErrorMessage } from '../../.helpers/getErrorMessage/index.js'
 
 /**
- * Displays a modal dialog that streams the device camera and scans for a QR code.
- *
- * The dialog closes once a QR code is decoded and the decoded payload is returned.
+ * Opens a modal camera scanner and resolves with the first decoded QR payload.
  *
  * @returns A promise that fulfills with the decoded QR code string.
- * @throws {QRError} If camera availability cannot be checked, no camera is available, the scan is cancelled, or scanner startup fails.
+ * @throws {QRError} Thrown when camera probing fails, no camera is available,
+ * scanner startup fails, or the interaction is cancelled.
  */
 export async function scan(): Promise<string> {
   let hasCamera = false

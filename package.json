@@ -1,6 +1,6 @@
 {
-  "name": "@z-base/qr",
-  "version": "1.0.2",
+  "name": "@sovereignbase/qr",
+  "version": "0.0.0",
   "description": "Simple managed QR display, print, and scan utilities for browser frontends.",
   "keywords": [
     "qr",
@@ -10,28 +10,30 @@
     "frontend",
     "spa",
     "esm",
+    "cjs",
     "typescript",
-    "z-base"
+    "sovereignbase"
   ],
   "license": "Apache-2.0",
   "type": "module",
-  "main": "dist/index.js",
+  "main": "dist/index.cjs",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     },
     "./package.json": "./package.json"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/z-base/qr.git"
+    "url": "git+https://github.com/sovereignbase/qr.git"
   },
   "bugs": {
-    "url": "https://github.com/z-base/qr/issues"
+    "url": "https://github.com/sovereignbase/qr/issues"
   },
-  "homepage": "https://z-base.github.io/qr",
+  "homepage": "https://sovereignbase.dev/qr",
   "files": [
     "dist",
     "LICENSE",
@@ -39,7 +41,7 @@
   ],
   "scripts": {
     "format": "prettier . --write",
-    "build": "tsc -p tsconfig.json",
+    "build": "tsup && node in-browser-testing-build.js",
     "test": "npm run build && node test/run-coverage.mjs && node test/e2e/run.mjs",
     "prepare": "husky",
     "prepublishOnly": "npm run test"
@@ -58,23 +60,25 @@
   },
   "sideEffects": false,
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "devDependencies": {
-    "@commitlint/cli": "^20.4.2",
-    "@commitlint/config-conventional": "^20.4.2",
-    "@playwright/test": "^1.58.2",
-    "@types/escape-html": "^1.0.4",
-    "@types/node": "^25.3.3",
+    "@commitlint/cli": "^20.5.0",
+    "@commitlint/config-conventional": "^20.5.0",
+    "@playwright/test": "^1.59.1",
+    "@types/node": "^25.6.0",
     "c8": "^11.0.0",
+    "edge-runtime": "^4.0.1",
     "fast-glob": "^3.3.3",
     "husky": "^9.1.7",
-    "playwright": "^1.58.2",
-    "prettier": "^3.8.1",
-    "typescript": "^5.6.3"
+    "playwright": "^1.59.1",
+    "prettier": "^3.8.3",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
+    "wrangler": "^4.84.0"
   },
   "dependencies": {
-    "qr": "^0.5.4",
+    "qr": "^0.5.5",
     "qr-scanner": "^1.4.2"
   }
 }

@@ -3,49 +3,358 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>QR</title>
-    <link rel="icon" type="image/png" href="./favicon.png" />
-    <style>
-      body {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 2rem;
-        height: 100dvh;
-        max-width: 100%;
-        text-align: center;
+    <title>QR Demo</title>
+    <meta
+      name="description"
+      content="Demo page for @sovereignbase/qr. Display, print, and scan QR codes in the browser with a small managed frontend API."
+    />
+    <meta
+      name="keywords"
+      content="qr, qrcode, qr scanner, qr demo, browser qr, frontend qr, sovereignbase, typescript"
+    />
+    <meta name="author" content="Jori Lehtinen" />
+    <meta
+      name="robots"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    />
+    <meta name="application-name" content="@sovereignbase/qr demo" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="canonical" href="https://sovereignbase.dev/qr/" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://sovereignbase.dev/sovereignbase_logo.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      href="https://sovereignbase.dev/sovereignbase_logo.png"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="Sovereignbase" />
+    <meta property="og:title" content="@sovereignbase/qr Demo" />
+    <meta
+      property="og:description"
+      content="Display, print, and scan QR codes in the browser with @sovereignbase/qr."
+    />
+    <meta property="og:url" content="https://sovereignbase.dev/qr/" />
+    <meta
+      property="og:image"
+      content="https://sovereignbase.dev/sovereignbase_social_sharing_image.png"
+    />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Sovereignbase QR demo page" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="@sovereignbase/qr Demo" />
+    <meta
+      name="twitter:description"
+      content="Demo page for @sovereignbase/qr with display, print, and scan flows."
+    />
+    <meta
+      name="twitter:image"
+      content="https://sovereignbase.dev/sovereignbase_social_sharing_image.png"
+    />
+    <meta name="twitter:image:alt" content="Sovereignbase QR demo page" />
+    <meta name="twitter:creator" content="@jortsupetterson" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://sovereignbase.dev/qr/#organization",
+            "name": "Sovereignbase",
+            "url": "https://github.com/sovereignbase",
+            "sameAs": [
+              "https://github.com/sovereignbase",
+              "https://jsr.io/@sovereignbase",
+              "https://www.npmjs.com/org/sovereignbase"
+            ]
+          },
+          {
+            "@type": "Person",
+            "@id": "https://sovereignbase.dev/qr/#author",
+            "name": "Jori Lehtinen",
+            "url": "https://github.com/jortsupetterson"
+          },
+          {
+            "@type": "SoftwareSourceCode",
+            "@id": "https://sovereignbase.dev/qr/#software",
+            "name": "@sovereignbase/qr",
+            "url": "https://sovereignbase.dev/qr/",
+            "description": "Simple managed QR display, print, and scan utilities for browser frontends.",
+            "codeRepository": "https://github.com/sovereignbase/qr",
+            "license": "https://www.apache.org/licenses/LICENSE-2.0",
+            "programmingLanguage": ["TypeScript", "JavaScript"],
+            "runtimePlatform": ["Web Browser"],
+            "keywords": [
+              "qr",
+              "qrcode",
+              "scanner",
+              "browser",
+              "frontend",
+              "typescript"
+            ],
+            "author": {
+              "@id": "https://sovereignbase.dev/qr/#author"
+            },
+            "publisher": {
+              "@id": "https://sovereignbase.dev/qr/#organization"
+            },
+            "sameAs": [
+              "https://jsr.io/@sovereignbase/qr/",
+              "https://www.npmjs.com/package/@sovereignbase/qr",
+              "https://github.com/sovereignbase/qr"
+            ]
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://sovereignbase.dev/qr/#webpage",
+            "url": "https://sovereignbase.dev/qr/",
+            "name": "@sovereignbase/qr Demo",
+            "description": "Display, print, and scan QR codes in the browser.",
+            "inLanguage": "en",
+            "about": {
+              "@id": "https://sovereignbase.dev/qr/#software"
+            }
+          }
+        ]
       }
-      section {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+    </script>
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family: 'IBM Plex Sans', 'Segoe UI', sans-serif;
+        background: #000;
+        color: #fff;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background:
+          radial-gradient(
+            circle at top,
+            rgba(255, 255, 255, 0.08),
+            transparent 34%
+          ),
+          #000;
+        color: #fff;
+      }
+
+      main {
+        width: min(100%, 42rem);
+        margin: 0 auto;
+        padding: 1.25rem;
+      }
+
+      .shell {
+        display: grid;
+        gap: 1.25rem;
+        padding: 1.25rem;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 1.25rem;
+        background: rgba(255, 255, 255, 0.04);
+        box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.45);
+      }
+
+      h1 {
+        margin: 1rem;
+        font-size: clamp(2rem, 8vw, 3.4rem);
+        line-height: 0.95;
+      }
+
+      .lede {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.76);
+        line-height: 1.6;
+      }
+
+      .controls {
+        display: grid;
+        gap: 1rem;
+      }
+
+      label {
+        display: grid;
+        gap: 0.55rem;
+        font-size: 0.95rem;
+      }
+
+      input,
+      button,
+      a {
+        border-radius: 999px;
+      }
+
+      input {
+        width: 100%;
+        padding: 0.9rem 1rem;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        background: #050505;
+        color: #fff;
+        font: inherit;
+      }
+
+      input::placeholder {
+        color: rgba(255, 255, 255, 0.38);
+      }
+
+      .actions {
+        display: grid;
+        gap: 0.75rem;
+      }
+
+      button {
+        width: 100%;
+        padding: 0.95rem 1rem;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        background: #fff;
+        color: #000;
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      button.secondary {
+        background: transparent;
+        color: #fff;
+      }
+
+      .result {
+        display: grid;
         gap: 0.5rem;
-        max-width: 100%;
+        padding: 1rem;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 1rem;
+        background: rgba(255, 255, 255, 0.03);
+      }
+
+      .result-label {
+        font-size: 0.78rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      output {
+        display: block;
+        min-height: 1.5rem;
+        overflow-wrap: anywhere;
+        font-family: 'IBM Plex Mono', 'Cascadia Code', monospace;
+        font-size: 0.95rem;
+        line-height: 1.5;
+      }
+
+      .note {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.7);
+        line-height: 1.6;
+      }
+
+      .links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+      }
+
+      .links a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.6rem;
+        min-height: 2.5rem;
+        padding: 0.75rem 1rem;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: #fff;
+        text-decoration: none;
+      }
+
+      .links img {
+        width: 1rem;
+        height: 1rem;
+        flex: 0 0 1rem;
+      }
+
+      @media (min-width: 40rem) {
+        main {
+          padding: 2rem;
+        }
+
+        .shell {
+          padding: 1.75rem;
+        }
+
+        .actions {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
       }
     </style>
   </head>
   <body>
-    <section>
-      <label for="qr-value-input">Value you want a QR from:</label>
-      <input id="qr-value-input" type="text" />
-    </section>
-    <section>
-      <button id="display-qr">Display the value as a QR-Code</button>
-      <button id="print-qr">Print the value as a QR-Code</button>
-      <button id="scan-qr">Scan a QR-Code</button>
-    </section>
-    <section>
-      <label for="qr-scan-output">QR-Code Scan result:</label>
-      <output id="qr-scan-output" for="scan-qr"></output>
-    </section>
-    <section>
-      <p>
-        Try the API by using `qr` namespace in the dev tools console. It has
-        methods `scan`, `print`, and `display`
-      </p>
-    </section>
-    <script type="module" src="./in-browser-testing.js" defer></script>
+    <main>
+      <section class="shell">
+        <header>
+          <h1>QR tool for Sovereignbase</h1>
+          <p class="lede">
+            Display, print, and scan QR codes in the browser with a small
+            managed frontend API.
+          </p>
+        </header>
+
+        <div class="controls">
+          <label for="qr-value-input">
+            Value you want a QR from
+            <input
+              id="qr-value-input"
+              type="text"
+              placeholder="https://sovereignbase.dev/qr"
+              autocomplete="off"
+            />
+          </label>
+
+          <div class="actions">
+            <button id="display-qr" type="button">Display QR code</button>
+            <button id="print-qr" type="button">Print QR code</button>
+            <button id="scan-qr" type="button" class="secondary">
+              Scan QR code
+            </button>
+          </div>
+
+          <section class="result" aria-live="polite">
+            <span class="result-label">Scan result</span>
+            <output id="qr-scan-output" for="scan-qr"></output>
+          </section>
+        </div>
+
+        <p class="note">
+          You can also try the API in the browser console through the
+          <code>qr</code> namespace with <code>scan</code>, <code>print</code>,
+          and <code>display</code>.
+        </p>
+
+        <nav class="links" aria-label="Project links">
+          <a href="https://jsr.io/@sovereignbase/qr">
+            <img src="https://cdn.simpleicons.org/jsr/white" alt="" />
+            JSR
+          </a>
+          <a href="https://www.npmjs.com/package/@sovereignbase/qr">
+            <img src="https://cdn.simpleicons.org/npm/white" alt="" />
+            npm
+          </a>
+          <a href="https://github.com/sovereignbase/qr">
+            <img src="https://cdn.simpleicons.org/github/white" alt="" />
+            GitHub
+          </a>
+        </nav>
+      </section>
+    </main>
+    <script type="module" src="./index.js" defer></script>
   </body>
 </html>

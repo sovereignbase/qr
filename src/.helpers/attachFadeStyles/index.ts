@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 z-base
+ * Copyright 2026 Sovereignbase
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
+/**
+ * Schedules a callback after the browser has had an opportunity to paint.
+ */
 function runAfterPaint(callback: () => void): void {
   if (typeof globalThis.requestAnimationFrame === 'function') {
     globalThis.requestAnimationFrame(() => {
@@ -25,6 +28,10 @@ function runAfterPaint(callback: () => void): void {
   setTimeout(callback, 0)
 }
 
+/**
+ * Applies temporary inline opacity-transition styles to an element and returns
+ * controls for revealing, hiding, and restoring the original inline styles.
+ */
 export function attachFadeStyles(
   element: HTMLElement,
   durationMs: number

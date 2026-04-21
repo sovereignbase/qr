@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 z-base
+ * Copyright 2026 Sovereignbase
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,4 +18,4 @@ export { QR } from './QR/class.js'
 export { scan } from './QR/scan/index.js'
 export { print } from './QR/print/index.js'
 export { display } from './QR/display/index.js'
-export { QRError } from './.errors/class.js'
+export { QRError, type QRErrorCode } from './.errors/class.js'

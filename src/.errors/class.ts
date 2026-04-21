@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 z-base
+ * Copyright 2026 Sovereignbase
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
+/**
+ * Stable error codes emitted by the package's public APIs.
+ */
 export type QRErrorCode =
   | 'VALUE_IS_NOT_A_STRING'
   | 'NO_CAMERA_AVAILABLE'
@@ -22,12 +25,17 @@ export type QRErrorCode =
   | 'SCAN_CANCELLED'
   | 'SCAN_START_FAILED'
 
+/**
+ * Error type thrown by the package's display, print, and scan flows.
+ *
+ * The {@link code} property is intended for application-level branching.
+ */
 export class QRError extends Error {
   readonly code: QRErrorCode
 
   constructor(code: QRErrorCode, message?: string) {
     const detail = message ?? code
-    super(`{@z-base/qr} ${detail}`)
+    super(`{@sovereignbase/qr} ${detail}`)
     this.code = code
     this.name = 'QRError'
   }
