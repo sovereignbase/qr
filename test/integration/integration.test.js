@@ -2,7 +2,15 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 
 import { installDomHarness } from '../.helpers/dom-harness.mjs'
-import { QR, QRError, display, print, scan } from '../../dist/index.js'
+import {
+  QR,
+  QRError,
+  display,
+  optimizeEncoding,
+  print,
+  restoreEncoding,
+  scan,
+} from '../../dist/index.js'
 import { getQrCalls, resetQrStub } from '../stubs/qr.mjs'
 import {
   configureQrScannerStub,
@@ -29,6 +37,52 @@ test('display rejects non-string values', () => {
   } finally {
     dom.restore()
   }
+})
+
+test('optimizeEncoding rejects non-string values', async () => {
+  await assert.rejects(
+    () => optimizeEncoding(123),
+    (error) => {
+      assertQRErrorCode(error, 'VALUE_IS_NOT_A_STRING')
+      return true
+    }
+  )
+})
+
+test('restoreEncoding rejects non-string values', async () => {
+  await assert.rejects(
+    () => restoreEncoding(false),
+    (error) => {
+      assertQRErrorCode(error, 'VALUE_IS_NOT_A_STRING')
+      return true
+    }
+  )
+})
+
+test('optimizeEncoding base45-encodes short values without forcing compression', async () => {
+  const value = 'abc'
+  const optimized = await optimizeEncoding(value)
+  const restored = await restoreEncoding(optimized)
+
+  assert.match(optimized, /^[0-9A-Z $%*+\-./:]+$/)
+  assert.equal(restored, value)
+})
+
+test('optimizeEncoding round-trips structured JSON payloads', async () => {
+  const payload = JSON.stringify({
+    issuer: 'sovereignbase',
+    type: 'example',
+    claims: Array.from({ length: 32 }, (_, index) => ({
+      index,
+      value: `claim-${index}`.repeat(3),
+    })),
+  })
+
+  const optimized = await optimizeEncoding(payload)
+  const restored = await restoreEncoding(optimized)
+
+  assert.equal(restored, payload)
+  assert.equal(optimized.length < payload.length, true)
 })
 
 test('display maps QR encode failures to QRError', () => {
@@ -609,12 +663,19 @@ test('scan reveals pre-registered child fades and handles unknown removals', asy
   }
 })
 
-test('QR class delegates to display, print, and scan', async () => {
+test('QR class delegates to optimizeEncoding, restoreEncoding, display, print, and scan', async () => {
   resetQrStub()
   resetQrScannerStub()
   configureQrScannerStub({ hasCameraResult: false })
   const dom = installDomHarness()
   try {
+    const encodedPayload = JSON.stringify({
+      hello: 'world',
+      repeat: 'x'.repeat(48),
+    })
+    const optimized = await QR.optimizeEncoding(encodedPayload)
+    assert.equal(await QR.restoreEncoding(optimized), encodedPayload)
+
     QR.display('via-class-display')
     dom.dispatchWindow('keydown')
 
