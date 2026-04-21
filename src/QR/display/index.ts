@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 z-base
+ * Copyright 2026 Sovereignbase
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,18 +21,19 @@ import { attachDialogBackdropFade } from '../../.helpers/attachDialogBackdropFad
 import { getErrorMessage } from '../../.helpers/getErrorMessage/index.js'
 
 /**
- * Displays a modal dialog containing a QR code representation of the specified string.
+ * Opens a modal dialog that renders the provided string as a QR code.
  *
- * The QR is rendered as scalable SVG and sized responsively to fit the viewport.
+ * The QR image is generated as SVG, loaded through a temporary `blob:` URL,
+ * and dismissed on a subsequent user interaction after the initial guard delay.
  *
- * @param value The string to encode.
- * @throws {QRError} If `value` is not a string or QR encoding fails.
+ * @param value String value to encode.
+ * @throws {QRError} Thrown when `value` is not a string or encoding fails.
  */
 export function display(value: string): void {
   if (typeof value !== 'string') {
     throw new QRError(
       'VALUE_IS_NOT_A_STRING',
-      'This library only accepts strings as value, use `@z-base/bytecodec` for conversions'
+      'This library only accepts strings as value, use `@sovereignbase/bytecodec` for conversions'
     )
   }
 

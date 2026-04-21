@@ -2,8 +2,7 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 
 import { installDomHarness } from '../.helpers/dom-harness.mjs'
-import { QRError } from '../../dist/.errors/class.js'
-import { QR, display, print, scan } from '../../dist/index.js'
+import { QR, QRError, display, print, scan } from '../../dist/index.js'
 import { getQrCalls, resetQrStub } from '../stubs/qr.mjs'
 import {
   configureQrScannerStub,
@@ -250,6 +249,24 @@ test('scan throws CAMERA_CHECK_FAILED when camera probing fails', async () => {
       (error) => {
         assertQRErrorCode(error, 'CAMERA_CHECK_FAILED')
         assert.match(error.message, /probe failed/)
+        return true
+      }
+    )
+  } finally {
+    dom.restore()
+  }
+})
+
+test('scan falls back to a default message for unknown camera probing failures', async () => {
+  resetQrScannerStub()
+  configureQrScannerStub({ hasCameraError: { reason: 'unknown' } })
+  const dom = installDomHarness()
+  try {
+    await assert.rejects(
+      () => scan(),
+      (error) => {
+        assertQRErrorCode(error, 'CAMERA_CHECK_FAILED')
+        assert.match(error.message, /Unable to check camera availability/)
         return true
       }
     )

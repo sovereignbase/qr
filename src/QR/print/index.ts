@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 z-base
+ * Copyright 2026 Sovereignbase
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,33 +19,33 @@ import { QRError } from '../../.errors/class.js'
 import { getErrorMessage } from '../../.helpers/getErrorMessage/index.js'
 
 /**
- * Opens a new tab containing an A4 print layout of card-sized QR codes for the specified string.
+ * Opens a print-friendly document containing repeated QR cards for the provided string.
  *
- * The QR code is generated as SVG and repeated into a centered grid of ID-1 (credit card) tiles with
- * dotted cut guides and corner crop marks. The print dialog is then invoked from within the new tab.
+ * The generated document uses an A4 grid of ID-1 cards, opens in a new tab or
+ * window, and then invokes the browser print dialog from that context.
  *
- * @param value The string to encode.
- * @throws {QRError} If `value` is not a string or QR encoding fails.
+ * @param value String value to encode.
+ * @throws {QRError} Thrown when `value` is not a string or encoding fails.
  */
 export function print(value: string): void {
   if (typeof value !== 'string')
     throw new QRError(
       'VALUE_IS_NOT_A_STRING',
-      'This library only accepts strings as value, use `@z-base/bytecodec` for conversions'
+      'This library only accepts strings as value, use `@sovereignbase/bytecodec` for conversions'
     )
 
-  // A4 portrait, fixed defaults
+  // A4 portrait defaults.
   const PAGE_MM = { w: 210, h: 297 }
   const PAGE_MARGIN_MM = 8
 
-  // ID-1 credit card
+  // ISO/IEC 7810 ID-1 card dimensions.
   const CARD_MM = { w: 85.6, h: 53.98 }
   const CARD_PADDING_MM = 4
 
-  // Looks good on card; keep within tile constraints
+  // Clamp the QR size to a value that prints cleanly inside the card tile.
   const QR_ON_CARD_MM = 42
 
-  // Cut guides / crop marks
+  // Cut guides and crop marks.
   const CUTLINE_MM = 0.35
   const CROP_LEN_MM = 3.5
   const CROP_OFF_MM = 1.2

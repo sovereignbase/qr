@@ -1,7 +1,7 @@
-[![npm version](https://img.shields.io/npm/v/@z-base/qr)](https://www.npmjs.com/package/@z-base/qr)
-[![CI](https://github.com/z-base/qr/actions/workflows/ci.yaml/badge.svg?branch=master)](https://github.com/z-base/qr/actions/workflows/ci.yaml)
-[![codecov](https://codecov.io/gh/z-base/qr/branch/master/graph/badge.svg)](https://codecov.io/gh/z-base/qr)
-[![license](https://img.shields.io/npm/l/@z-base/qr)](LICENSE)
+[![npm version](https://img.shields.io/npm/v/@sovereignbase/qr)](https://www.npmjs.com/package/@sovereignbase/qr)
+[![CI](https://github.com/sovereignbase/qr/actions/workflows/ci.yaml/badge.svg?branch=master)](https://github.com/sovereignbase/qr/actions/workflows/ci.yaml)
+[![codecov](https://codecov.io/gh/sovereignbase/qr/branch/master/graph/badge.svg)](https://codecov.io/gh/sovereignbase/qr)
+[![license](https://img.shields.io/npm/l/@sovereignbase/qr)](LICENSE)
 
 # qr
 
@@ -9,8 +9,8 @@ A simple, managed QR toolset for browser frontends. It gives SPAs a small API to
 
 ## Compatibility
 
-- Runtimes: modern browsers (primary target); Node >= 18 for build/test workflows.
-- Module format: ESM-only.
+- Runtimes: modern browsers; Node >= 20 for build/test workflows.
+- Module format: ESM and CJS.
 - Required browser APIs: `document`, `<dialog>`, `Blob`, `URL.createObjectURL`, and camera/media APIs for scanning.
 - TypeScript: bundled types.
 
@@ -24,17 +24,23 @@ A simple, managed QR toolset for browser frontends. It gives SPAs a small API to
 ## Installation
 
 ```sh
-npm install @z-base/qr
+npm install @sovereignbase/qr
 # or
-pnpm add @z-base/qr
+pnpm add @sovereignbase/qr
 # or
-yarn add @z-base/qr
+yarn add @sovereignbase/qr
+# or
+bun add @sovereignbase/qr
+# or
+deno add jsr:@sovereignbase/qr
+# or
+vlt install jsr:@sovereignbase/qr
 ```
 
 ## Usage
 
 ```ts
-import { QR, QRError } from '@z-base/qr'
+import { QR, QRError } from '@sovereignbase/qr'
 
 QR.display('https://example.com')
 QR.print('https://example.com')
@@ -54,7 +60,7 @@ try {
 You can also import function-level APIs directly:
 
 ```ts
-import { display, print, scan } from '@z-base/qr'
+import { display, print, scan } from '@sovereignbase/qr'
 ```
 
 ## API

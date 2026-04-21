@@ -6,7 +6,7 @@ declare module 'qr-scanner' {
   export default QrScanner
 }
 /*
- * Copyright 2026 z-base
+ * Copyright 2026 Sovereignbase
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
