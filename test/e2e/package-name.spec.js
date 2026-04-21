@@ -13,14 +13,18 @@ test.describe('qr e2e harness', () => {
     const apiShape = await page.evaluate(() => {
       return {
         display: typeof globalThis.qr?.display,
+        optimizeEncoding: typeof globalThis.qr?.optimizeEncoding,
         print: typeof globalThis.qr?.print,
+        restoreEncoding: typeof globalThis.qr?.restoreEncoding,
         scan: typeof globalThis.qr?.scan,
       }
     })
 
     expect(apiShape).toEqual({
       display: 'function',
+      optimizeEncoding: 'function',
       print: 'function',
+      restoreEncoding: 'function',
       scan: 'function',
     })
   })

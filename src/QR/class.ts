@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+import { optimizeEncoding } from './optimizeEncoding/index.js'
+import { restoreEncoding } from './restoreEncoding/index.js'
 import { display } from './display/index.js'
 import { print } from './print/index.js'
 import { scan } from './scan/index.js'
@@ -22,6 +24,31 @@ import { scan } from './scan/index.js'
  * Namespace wrapper for the package's managed QR user-interface flows.
  */
 export class QR {
+  /**
+   * Optimizes a string for QR transport by optionally compressing it and always base45 encoding it.
+   *
+   * This is useful for structured payloads such as stringified JSON where raw QR encoding
+   * would otherwise become visually noisy or require a denser symbol.
+   *
+   * @param value String value to optimize for QR transport.
+   * @returns A base45 string with a one-byte strategy flag prefix.
+   * @throws {QRError} Thrown when `value` is not a string.
+   */
+  static optimizeEncoding(value: string): Promise<string> {
+    return optimizeEncoding(value)
+  }
+
+  /**
+   * Restores an optimized QR payload produced by {@link optimizeEncoding}.
+   *
+   * @param value Base45-encoded optimized payload.
+   * @returns The original decoded string.
+   * @throws {QRError} Thrown when `value` is not a string.
+   */
+  static restoreEncoding(value: string): Promise<string> {
+    return restoreEncoding(value)
+  }
+
   /**
    * Opens a modal dialog that renders the provided string as a QR code.
    *
