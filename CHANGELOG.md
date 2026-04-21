@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/sovereignbase/qr/compare/v1.1.0...v1.2.0) (2026-04-21)
+
+
+### Features
+
+* add QR encoding optimizer and restore helpers ([f85e592](https://github.com/sovereignbase/qr/commit/f85e592c73781a8d298684724a3aaee742f0d94c))
+
 ## [1.1.0](https://github.com/sovereignbase/qr/compare/v1.0.2...v1.1.0) (2026-04-21)
 
 
